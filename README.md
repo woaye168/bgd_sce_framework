@@ -87,33 +87,14 @@ template/.bgd/
 
 ## 核心开发约定
 
-### 1. 模块写法（统一 return M + EmmyLua 注解）
-
-```lua
--- src/server/PlayerManager.lua
-
----@class PlayerData
----@field uid number
----@field name string
-
----@class PlayerManager
-local M = {}
-
----@param userId number
----@return PlayerData
-function M.CreatePlayerData(userId)
-    return { uid = userId, name = "新手玩家" }
-end
-
-return M
-```
-
-消费方：
-
-```lua
-local PlayerManager = require('src.server.PlayerManager')
-local data = PlayerManager.CreatePlayerData(uid)  -- data. 有字段补全
-```
+### 1. 命名规范
+| 类型 | 规范 | 示例 | 适用场景 |
+| :--- | :--- | :--- | :--- |
+| **模块/类名** | PascalCase (大驼峰) | `PlayerManager`, `UIManager` | 独立的文件、核心全局表 |
+| **公共方法** | PascalCase (大驼峰) | `GetItemData()`, `TakeDamage()` | 暴露给其他模块调用的接口 |
+| **私有方法** | camelCase (小驼峰) | `local calculateBonus()` | 仅在当前文件/作用域内使用 |
+| **数据属性/Key** | snake_case (下划线) | `item_id`, `max_hp`, `start_time` | Table 内部的字段，特别是与配表对应的数据 |
+| **常量** | UPPER_SNAKE_CASE | `MAX_INVENTORY_SIZE` | 全局不变的值 |
 
 ### 2. 全局 API 模块（丢文件即注册）
 

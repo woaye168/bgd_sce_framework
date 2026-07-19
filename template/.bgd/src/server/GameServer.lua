@@ -2,8 +2,8 @@
 -- 这是服务端的主入口文件
 
 -- 1. 引入其他模块
-local DataManager = require('src.common.DataManager')
-local PlayerManager = require('src.server.PlayerManager')
+require('src.common.DataManager')
+require('src.server.PlayerManager')
 
 -- 2. 玩家连接事件的回调函数
 local function OnPlayerJoin(trg, playerObj, is_reconnect)
@@ -11,12 +11,18 @@ local function OnPlayerJoin(trg, playerObj, is_reconnect)
     local uid = base.auxiliary.get_player_id(playerObj)
 
     -- 核心：在这里调度 Manager！
-    local playerData = PlayerManager.CreatePlayerData(uid)
+    local playerData = PlayerManager.CreateDefaultPlayerData(uid)
     PlayerManager.OnlinePlayers[uid] = playerData
 
     -- 验证输出
     log.info("====== 玩家上线 ======")
     log.info("UID: " .. tostring(uid))
+    log.info("HP: " .. tostring(playerData.hp) .. "/" .. tostring(playerData.max_hp))
+    log.info("MP: " .. tostring(playerData.mp) .. "/" .. tostring(playerData.max_mp))
+    log.info("Exp: " .. tostring(playerData.exp) .. "/" .. tostring(playerData.exp))
+    log.info("Level: " .. tostring(playerData.level))
+    log.info("inventory: " .. bgd_api.common.json.encode_x(playerData.inventory))
+    log.info("======================")
     log.info("玩家数据已就绪")
 end
 

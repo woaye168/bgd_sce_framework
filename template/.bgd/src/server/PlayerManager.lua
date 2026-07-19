@@ -1,41 +1,17 @@
 -- PlayerManager.lua (服务端)
--- 玩家数据管理器
+PlayerManager = {}
+PlayerManager.OnlinePlayers = {} -- 存放在线玩家的运行时数据
 
----@class PlayerData
----@field uid number        -- 玩家唯一标识
----@field name string       -- 玩家名字
----@field level number      -- 等级
----@field hp number         -- 当前血量
----@field max_hp number     -- 最大血量
----@field mp number         -- 当前蓝量
----@field max_mp number     -- 最大蓝量
----@field exp number        -- 当前经验值
----@field money number      -- 铜币
----@field inventory table   -- 背包
+-- 核心任务：定义玩家长什么样
+function PlayerManager.CreateDefaultPlayerData(userId)
+    -- 尝试从 DataManager 获取假数据 (假设1001是木剑，2001是红药)
+    local startingWeapon = DataManager.GetItemData(1001)
+    local startingPotion = DataManager.GetItemData(2001)
 
----@class PlayerManager
-local M = {}
+    local initialInventory = {}
+    if startingWeapon then table.insert(initialInventory, startingWeapon) end
+    if startingPotion then table.insert(initialInventory, startingPotion) end
 
----@type table<number, PlayerData> 在线玩家的运行时数据
-M.OnlinePlayers = {}
-
----创建玩家数据（GameServer 在玩家连入时调用）
----@param userId number
----@return PlayerData
-function M.CreatePlayerData(userId)
-    return M.CreateDefaultPlayerData(userId)
-end
-
----清理玩家数据（GameServer 在玩家断线时调用）
----@param userId number
-function M.RemovePlayerData(userId)
-    M.OnlinePlayers[userId] = nil
-end
-
----定义默认玩家数据结构
----@param userId number
----@return PlayerData
-function M.CreateDefaultPlayerData(userId)
     return {
         uid = userId,            -- 玩家唯一标识
         name = "新手玩家",         -- 默认名字
@@ -46,8 +22,6 @@ function M.CreateDefaultPlayerData(userId)
         max_mp = 50,             -- 最大蓝量
         exp = 0,                 -- 当前经验值
         money = 0,               -- 铜币
-        inventory = {}           -- 空的背包Table
+        inventory = initialInventory           -- 初始背包
     }
 end
-
-return M
