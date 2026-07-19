@@ -1,4 +1,5 @@
 ---Json模块
+---框架版本标记: v0.2.0
 ---@class CommonJson
 local M = {}
 local depth_max_default = 5
