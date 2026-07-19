@@ -1,0 +1,24 @@
+name: Release
+
+# 推送 v* tag 时自动创建 GitHub Release
+# 工具的「检查框架更新」通过 releases/latest 读取最新版本
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: bgd_sce_framework ${{ github.ref_name }}
+          generate_release_notes: true
