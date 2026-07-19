@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/EmmyLuaLs/emmylua-analyzer-rust/refs/heads/main/crates/emmylua_code_analysis/resources/schema.json",
+  "runtime": {
+    "version": "Lua5.4",
+    "requirePattern": ["?.lua", "?/init.lua"]
+  },
+  "workspace": {
+    "encoding": "utf-8",
+    "ignoreDir": ["./.see", "./script", "./src", "./ui"],
+    "workspaceRoots": ["./.bgd"],
+    "library": [
+      {
+        "path": "D:/sce_open/res/_m/script/195/script",
+        "ignoreDir": ["preload", "test", "uninstall", "update", "upload"],
+        "ignoreGlobs": []
+      },
+      "D:/sce_open/res/_m/gameui/48/gameui/ui"
+    ],
+    "moduleMap": [
+      { "pattern": "^(common|base|gameui)\\.", "replace": "@$1." }
+    ]
+  }
+}

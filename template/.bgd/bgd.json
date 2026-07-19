@@ -1,0 +1,30 @@
+{
+  "project_root": ".",
+  "enable_build_log": false,
+
+  "asset_target": "../res",
+  "libs_asset_output_name": "bgd_libs_asset",
+  "game_asset_output_name": "bgd_game_asset",
+
+  "server_entrance": "../src/main.lua",
+  "client_entrance": "../ui/src/main.lua",
+
+  "libs_dir": "libs",
+  "libs_server_target": "../script/bgd_libs_server",
+  "libs_client_target": "../ui/script/bgd_libs_client",
+  "libs_excludes": [
+    "types",
+    "client/eg",
+    "client/hook"
+  ],
+
+  "game_dir": "src",
+  "game_server_target": "../script/bgd_game_server",
+  "game_client_target": "../ui/script/bgd_game_client",
+  "game_excludes": [],
+
+  "templates_dir": "templates",
+
+  "framework_version": "0.1.0",
+  "framework_repo": "woaye168/bgd_sce_framework"
+}
