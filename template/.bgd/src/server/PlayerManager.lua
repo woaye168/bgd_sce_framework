@@ -25,3 +25,9 @@ function PlayerManager.CreateDefaultPlayerData(userId)
         inventory = initialInventory           -- 初始背包
     }
 end
+
+function PlayerManager.RemovePlayerData(uid)
+    if PlayerManager.OnlinePlayers[uid] then
+        PlayerManager.OnlinePlayers[uid] = nil
+    end
+end
