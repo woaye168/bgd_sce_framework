@@ -1,0 +1,15 @@
+# BGD 构建产物（可由 bgd_sce_tools 重新生成，无需提交）
+/script/bgd_libs_server/
+/script/bgd_game_server/
+/ui/script/bgd_libs_client/
+/ui/script/bgd_game_client/
+
+# BGD 日志与本地状态
+/.bgd/log/
+/.bgd/.framework_state.json
+
+# 框架更新冲突暂存
+*.framework-new
+
+# 编辑器缓存
+/.see/
