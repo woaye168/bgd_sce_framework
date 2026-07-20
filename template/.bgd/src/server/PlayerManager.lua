@@ -1,4 +1,6 @@
 -- PlayerManager.lua (服务端)
+require('src.common.DataManager')
+
 PlayerManager = {}
 PlayerManager.OnlinePlayers = {} -- 存放在线玩家的运行时数据
 

@@ -13,3 +13,6 @@ log.info(
         '[ bgd-game ]  %s(%s) 初始化完成', bgd_config.client.game_info.name, bgd_config.client.game_info.version
     )
 )
+
+-- 载入客户端逻辑
+require('src.client.GameClient')

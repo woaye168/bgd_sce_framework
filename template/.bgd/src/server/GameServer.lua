@@ -2,10 +2,16 @@
 -- 这是服务端的主入口文件
 
 -- 1. 引入其他模块
-require('src.common.DataManager')
-require('src.server.PlayerManager')
+require('src.common.DataManager')  -- 引入数据管理模块
+require('src.server.PlayerManager')  -- 引入玩家管理模块
+require("src.server.MonsterManager") -- 引入怪物管理模块
+require("src.server.CombatSystem")   -- 引入战斗系统，让它开始监听客户端请求
 
--- 2. 玩家连接事件的回调函数
+-- 2. 执行所有模块的预初始化操作 (这里就是你调用的地方！)
+MonsterManager.InitTestDummy() -- 【核心改动】在这里生成木桩
+-- (未来如果 DataManager 需要从文件加载配置表，也在这里调用类似 DataManager.LoadConfigs() 的方法)
+
+-- 3. 玩家连接事件的回调函数
 local function OnPlayerJoin(trg, playerObj, is_reconnect)
     -- local uid = playerObj:GetUserId()
     local uid = base.auxiliary.get_player_id(playerObj)
@@ -26,7 +32,6 @@ local function OnPlayerJoin(trg, playerObj, is_reconnect)
     log.info("玩家数据已就绪")
 end
 
--- 3. 玩家断开事件的回调函数
 local function OnPlayerLeave(trg, playerObj)
     -- local uid = playerObj:GetUserId()
     local uid = base.auxiliary.get_player_id(playerObj)
