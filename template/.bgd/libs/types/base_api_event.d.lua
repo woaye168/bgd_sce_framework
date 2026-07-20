@@ -173,6 +173,16 @@ function base.game:broadcast(name, f) end
 ---@return fun(data: table) sender 消息发送函数，传入参数表即发送
 function base.game:server(type) end
 
+---构造客户端自定义消息（广播给所有客户端）。调用形式为 base.game:ui'消息名'{参数表}。
+---客户端通过 function base.proto.消息名(table) 接收。
+---注意：自定义消息在客户端断线重连后不会补发；传 ensure=true 可标记为「必定送达」，
+---重连后会依次补发（只给必要的消息加，不要滥用）。
+---官方文档：服务端Lua API / 其它 / 服务端发送自定义消息给客户端
+---@param type string 消息名（客户端 base.proto 中注册的处理函数名）
+---@param ensure? boolean 传 true 表示「必定送达」（断线重连后补发）
+---@return fun(data: any): boolean sender 消息发送函数；消息序列化后超过 1300*256 时调用返回 false
+function base.game:ui(type, ensure) end
+
 ------------------------------------------------------------------------------
 -- base.event 全局回调（server.lua，由引擎调用）
 ------------------------------------------------------------------------------

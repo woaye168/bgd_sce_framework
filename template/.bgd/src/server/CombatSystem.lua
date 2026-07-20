@@ -19,6 +19,15 @@ local function HandleBasicAttack(_, playerUid, data)
     local damage = 10
     target.hp = target.hp - damage
 
+    -- 服务端向所有客户端广播战斗结果
+    local resultData = {
+        attacker_name = player.name,
+        target_uid = targetId,
+        damage_value = damage,
+        current_hp = target.hp
+    }
+    base.game:ui('Sync_CombatResult')(resultData)
+
     log.info(player.name .. " 攻击了 " .. target.name .. "，造成了 " .. damage .. " 点伤害！")
 
     -- 死亡判定
