@@ -171,7 +171,7 @@ require('bgd_game_server')
 
 你要加自己的库路径或调整索引策略时，只改 `src/.emmyrc.json`（数组合并、标量覆盖），框架更新不会冲掉你的配置。
 
-推荐使用 [EmmyLua](https://github.com/EmmyLuaLs/emmylua-analyzer-rust) 插件（VS Code / Trae）。
+推荐使用 [EmmyLua](https://github.com/EmmyLua/VSCode-EmmyLua) 插件（VS Code / Trae）。
 
 ## 初始化锁
 
