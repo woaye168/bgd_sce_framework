@@ -16,11 +16,51 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # 完整历史，用于归纳版本间提交
+
+      - name: Generate release notes
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $repo = "${{ github.repository }}"
+          # 找到上一个 tag（按版本号排序，排除当前）
+          $prev = git tag --sort=-v:refname | Where-Object { $_ -ne $tag } | Select-Object -First 1
+
+          $range = if ($prev) { "$prev..$tag" } else { "$tag" }
+          # 提交列表：- <标题> (<短哈希>)
+          $commits = git log $range --pretty=format:"- %s (``%h``)" --no-merges
+
+          $lines = @()
+          $lines += "## 版本说明"
+          $lines += ""
+          if ($prev) {
+            $lines += "本版本相对 ``$prev`` 的全部变更如下："
+          } else {
+            $lines += "首个版本，包含全部提交："
+          }
+          $lines += ""
+          $lines += "### What's Changed"
+          $lines += ""
+          if ($commits) {
+            $lines += $commits
+          } else {
+            $lines += "- 无代码变更"
+          }
+          $lines += ""
+          if ($prev) {
+            $lines += "**Full Changelog**: https://github.com/$repo/compare/$prev...$tag"
+          }
+
+          $body = $lines -join "`n"
+          # 写入输出（多行）
+          "body<<EOF" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          $body | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "EOF" | Out-File $env:GITHUB_OUTPUT -Append -Encoding utf8
+        id: notes
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: bgd_sce_framework ${{ github.ref_name }}
-          # 自动生成更新日志：关联本 tag 与前一个 tag 之间的提交与 PR
-          # 分组规则见 .github/release.yml
-          generate_release_notes: true
+          body: ${{ steps.notes.outputs.body }}
