@@ -1,20 +1,21 @@
-# AGENTS.md — 游戏项目（BGD 框架）
+# AGENTS.md — 游戏项目
 
-> 本文件面向在这个星火编辑器（SCE）游戏项目里工作的 AI 编程代理。遵循 [agents.md](https://agents.md/) 规范。
-> 本项目使用 BGD 框架 + bgd_sce_tools 构建工具，请先理解下面的结构与规则再动手。
+> 本项目是星火编辑器（SCE）Lua 游戏项目。
+> 本项目基于 bgd_sce_framework（https://github.com/woaye168/bgd_sce_framework） 开发 + bgd_sce_tools（https://github.com/woaye168/bgd_sce_tools） 构建。
+> 请先理解下面的结构与规则再动手。
 
-## 项目结构速览
+## 框架结构速览
 
 ```
 .bgd/
-  libs/     # 框架代码（工具管理，**禁止修改/新增**，框架更新只碰这里）
+  libs/     # 框架代码（由 bgd_sce_tools 配置的远程仓库管理，**禁止修改/新增**）
   src/      # ===== 你的工作区：游戏业务代码都写在这里 =====
             #   common/（双端共享） server/（仅服务端） client/（仅客户端）
             #   每个端下有 api/（自动注册） const/ config.lua init.lua
             #   entrance/（入口） asset/（资源）
   bgd.json  # 项目配置（覆盖项 + 框架版本）
 script/ ui/script/  # 构建产物（**禁止手改**，由工具生成）
-src/main.lua ui/src/main.lua  # 引擎入口（标记之前是编辑器原文，之后是构建产物）
+src/main.lua ui/src/main.lua  # 星火编辑器引擎入口（标记之前是编辑器原文，之后是构建产物），由 entrance/client.lua  entrance/server.lua 构建。
 ```
 
 **铁律：你的所有业务代码都写在 `.bgd/src/` 下，绝不碰 `.bgd/libs/` 和构建产物目录。**
@@ -70,19 +71,12 @@ bgd_sce_tools check-watch --project <项目根路径>
 ```
 
 - **输出"监听中"**：保存文件即自动增量构建，**无需任何手动构建**
-- **输出"未监听"**：提醒开发者到工具的「构建」页执行「全量构建」；
-  或你直接执行（并把日志落盘便于确认结果）：
+- **输出"未监听"**：执行全量构建。构建后在终端输出末尾检查结果：
+  末行含 `构建完成` = 成功，含 `错误:` = 失败。
   ```bash
-  bgd_sce_tools build --project <项目根路径> --log .bgd/log/build.log
+  bgd_sce_tools build --project .
   ```
-  然后读 `.bgd/log/build.log` 确认构建结果
+  只有排查构建问题时才加 `--log .bgd/log/build.log`（文件每次覆盖写，只含最新一次）。
 
 > CLI 全路径（若未配 PATH）：
 > `"%LOCALAPPDATA%\bgd_sce_tools\bgd_sce_tools.exe" <子命令>`
-
-## 验证清单（改完代码后）
-
-1. require 路径是否为静态真实路径（无拼接）
-2. 新模块是否 `return M` + `---@class` 注解
-3. 服务端/客户端代码是否放对了端（common 会双端各复制一份）
-4. 构建后产物里对应文件已更新（开监听则保存即构建）
