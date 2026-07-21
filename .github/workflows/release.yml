@@ -16,25 +16,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0 # 拉取完整历史，用于生成版本间更新记录
-
-      - name: Generate release notes from git log
-        shell: pwsh
-        run: |
-          $tag = "${{ github.ref_name }}"
-          $prev = git tag --sort=-creatordate | Where-Object { $_ -ne $tag } | Select-Object -First 1
-          if ($prev) {
-            "## What's Changed`n" | Out-File release_notes.md -Encoding utf8
-            git log "$prev..$tag" --pretty=format:"- %s (%h)" | Out-File release_notes.md -Append -Encoding utf8
-            "`n`n**Full Changelog**: https://github.com/${{ github.repository }}/compare/$prev...$tag" | Out-File release_notes.md -Append -Encoding utf8
-          } else {
-            "## What's Changed`n" | Out-File release_notes.md -Encoding utf8
-            git log "$tag" --pretty=format:"- %s (%h)" | Out-File release_notes.md -Append -Encoding utf8
-          }
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: bgd_sce_framework ${{ github.ref_name }}
-          body_path: release_notes.md
+          # 自动生成更新日志：关联本 tag 与前一个 tag 之间的提交与 PR
+          # 分组规则见 .github/release.yml
+          generate_release_notes: true

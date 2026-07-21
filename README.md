@@ -232,4 +232,4 @@ git push origin v0.1.1
 
 ## 许可证
 
-尚未指定，后续补充。二次开发前请先与作者确认。
+本项目采用 [GNU General Public License v3.0](LICENSE) 开源。
