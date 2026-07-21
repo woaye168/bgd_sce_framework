@@ -78,7 +78,7 @@ bgd_sce_tools check-watch --project <项目根路径>
   然后读 `.bgd/log/build.log` 确认构建结果
 
 > CLI 全路径（若未配 PATH）：
-> `"%LOCALAPPDATA%\Programs\bgd_sce_tools\bgd_sce_tools.exe" <子命令>`
+> `"%LOCALAPPDATA%\bgd_sce_tools\bgd_sce_tools.exe" <子命令>`
 
 ## 验证清单（改完代码后）
 
