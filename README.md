@@ -80,7 +80,6 @@ template/.bgd/
 | --- | --- | --- |
 | `libs/` | `script/bgd_libs_server/` | `ui/script/bgd_libs_client/` |
 | `src/` | `script/bgd_game_server/` | `ui/script/bgd_game_client/` |
-| `*/asset/` | `res/`（二进制原样复制） | 同左 |
 | `*/entrance/` | 合并输出到 `src/main.lua`、`ui/src/main.lua`（框架在前、游戏在后） | 同左 |
 
 拆分规则：`server/` 只进服务端产物，`client/` 只进客户端产物，`common/` **双端各复制一份**。
