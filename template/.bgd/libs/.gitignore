@@ -70,6 +70,7 @@ ref/
 # BGD 日志与本地状态
 /.bgd/log/
 /.bgd/.framework_state.json
+/.bgd/.watch_state.json
 
 # 框架更新冲突暂存
 *.framework-new

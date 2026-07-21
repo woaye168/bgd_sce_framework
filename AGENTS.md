@@ -45,7 +45,7 @@ LICENSE                 # GPLv3
 
 1. 直接在 `template/.bgd/libs/` 下修改/新增模块（遵守上述约定）
 2. 提交推送 main
-3. 打 Release tag（**无需写注解**，Release notes 按 `.github/release.yml` 自动归纳，附版本间 Full Changelog 链接）：
+3. 打 Release tag（**无需写注解**，workflow 用 git log 自动归纳版本间提交生成结构化版本说明 + Full Changelog 链接）：
 
 ```bash
 git tag -a vX.Y.Z
