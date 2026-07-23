@@ -49,6 +49,8 @@ src/main.lua ui/src/main.lua  # 星火编辑器引擎入口（标记之前是编
 4. **覆盖框架行为**：在 `src/<端>/api/` 放与框架同名模块（bgd_api 软覆盖）
 5. **禁止手改**：`.bgd/libs/`、`script/`、`ui/script/`、`src/main.lua` 标记之后的内容、
    项目根 `.emmyrc.json` / `.gitignore`（要改就改 `.bgd/src/` 下的同名片段）
+6. **文档同步**：新增/修改 `src/` 下的模块 API、配置或目录结构时，同步更新 `src/` 下对应的
+   说明文档（如 `src/doc/` 或本目录使用文档），功能改动与文档更新在同一次提交中完成
 
 ## 常用任务指引
 

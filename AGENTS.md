@@ -44,8 +44,9 @@ LICENSE                 # GPLv3
 ## 修改框架代码
 
 1. 直接在 `template/.bgd/libs/` 下修改/新增模块（遵守上述约定）
-2. 提交推送 main
-3. 打 Release tag（**无需写注解**，workflow 用 git log 自动归纳版本间提交生成结构化版本说明 + Full Changelog 链接）：
+2. **文档同步约定**：修改任何用户可见的行为（模块 API、配置项、目录结构、构建/更新流程）时，必须同步检查并更新 `README.md`、`AGENTS.md` 及 `template/.bgd/libs/` 下的使用文档（如适用）。功能改动与对应文档更新必须在同一次提交中完成，不允许"先改功能后补文档"。
+3. 提交推送 main
+4. 打 Release tag（**无需写注解**，workflow 用 git log 自动归纳版本间提交生成结构化版本说明 + Full Changelog 链接）：
 
 ```bash
 git tag -a vX.Y.Z
